@@ -1,0 +1,81 @@
+CREATE TABLE Student (
+	stu_id int PRIMARY KEY,
+	stu_name VARCHAR(24),
+	clg_id VARCHAR(24)
+);
+INSERT INTO Student VALUES (2, 'Prakhar Shrivastava2', '0225CS181034'), (3, 'John Smith', '0225CS181052');
+
+UPDATE Student SET stu_name = 'John Doe' WHERE stu_name = 'Prakhar Shrivastava2';
+
+DELETE FROM Student
+WHERE stu_name = 'John Doe';
+
+TRUNCATE TABLE Student;
+
+SELECT * FROM Student;
+
+CREATE TABLE StudentDetails (
+	stu_id int,
+	address VARCHAR(50),
+	age INT NOT NULL,
+	Foreign key (stu_id) REFERENCES Student(stu_id)
+);
+
+SELECT * FROM StudentDetails;
+
+INSERT INTO StudentDetails VALUES(1, 'London', 31);
+
+SELECT Student.stu_id, Student.stu_name, StudentDetails.address FROM Student
+JOIN StudentDetails
+ON Student.stu_id = StudentDetails.stu_id;
+
+SELECT Student.stu_id, StudentDetails.address FROM Student, StudentDetails
+WHERE Student.stu_id = StudentDetails.stu_id;
+
+DELETE FROM StudentDetails WHERE stu_id = 2;
+
+SELECT * FROM Student
+LEFT JOIN StudentDetails
+ON Student.stu_id = StudentDetails.stu_id;
+
+SELECT * FROM Student
+RIGHT OUTER JOIN StudentDetails
+ON Student.stu_id = StudentDetails.stu_id;
+
+SELECT * FROM Student
+FULL OUTER JOIN StudentDetails
+ON Student.stu_id = StudentDetails.stu_id;
+
+SELECT * FROM StudentDetails
+CROSS JOIN Student;
+
+SELECT * FROM Student A, Student B WHERE A.stu_id <= B.stu_id;
+
+SELECT MAX(stu_id) FROM Student WHERE stu_name != 'Prakhar Shrivastava';
+
+CREATE TABLE Marks (
+	stu_id INT,
+	marks INT
+);
+
+ALTER TABLE Marks ADD COLUMN sub_id int;
+
+INSERT INTO Marks VALUES (1,40,2), (2,41,1),(3,49,3),(4,60,1),(5,90,2);
+
+TRUNCATE TABLE Marks;
+
+SELECT * FROM Marks;
+
+-- Error
+-- SELECT sub_id, COUNT(marks) FROM Marks
+-- GROUP BY sub_id
+-- WHERE SUM(marks) > 100;
+
+SELECT sub_id FROM Marks 
+GROUP BY sub_id
+HAVING SUM(marks) < 100;
+
+
+
+
+
